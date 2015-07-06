@@ -2,12 +2,22 @@ require "test_helper"
 
 class ArticleTest < ActiveSupport::TestCase
 
-  def article
-    @article ||= Article.new
+  before do
+    @article = articles(:one)
   end
 
-  def test_valid
-    assert article.valid?
+  test 'Valid Article' do
+    assert @article.valid?
+  end
+
+  test 'Presence of Title' do
+    @article.title = ''
+    refute @article.valid?
+  end
+
+  test 'Presence of Body' do
+    @article.body = ''
+    refute @article.valid?
   end
 
 end
