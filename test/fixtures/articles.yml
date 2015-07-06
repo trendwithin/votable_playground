@@ -1,0 +1,12 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  title: A New Article Title
+  body: A New Article Body
+
+two:
+  user_id: 2
+  title: User Two New Article
+  body: User Two Body
