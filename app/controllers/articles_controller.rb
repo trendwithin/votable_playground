@@ -43,6 +43,18 @@ class ArticlesController < ApplicationController
     end
   end
 
+  def upvote
+    @article = Article.find(params[:id])
+    @article.upvote_by current_user
+    redirect_to :back
+  end
+
+  def downvote
+    @article = Article.find(params[:id])
+    @article.downvote_by current_user
+    redirect_to :back
+  end
+
   private
     def article_params
       params.require(:article).permit(:title, :body)

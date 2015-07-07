@@ -88,4 +88,36 @@ class ArticlesControllerTest < ActionController::TestCase
     assert_redirected_to articles_path
     assert_equal 2, Article.count
   end
+
+  test 'ACTS_AS_VOTABLE: Article 1 has one like vote' do
+    @request.env['HTTP_REFERER'] = 'http://test.host/articles'
+    assert_equal 0, articles(:one).get_upvotes.size
+    put :upvote, id: articles(:one)
+    assert_redirected_to articles_path
+    assert_equal 1, articles(:one).get_upvotes.size
+  end
+
+  test 'ACTS_AS_VOTABLE: Article 1 has one down vote' do
+    @request.env['HTTP_REFERER'] = 'http://test.host/articles'
+    assert_equal 0, articles(:one).get_downvotes.size
+    put :downvote, id: articles(:one)
+    assert_redirected_to articles_path
+    assert_equal 1, articles(:one).get_downvotes.size
+  end
+
+  test 'ACTS_AS_VOTABLE: Article 2 has 0 votes after one up and one down' do
+    @request.env['HTTP_REFERER'] = 'http://test.host/articles'
+    put :upvote, id: articles(:two)
+    put :downvote, id: articles(:two)
+    assert_redirected_to articles_path
+    assert_equal 0, articles(:one).get_downvotes.size
+  end
+
+  test 'ACTS_AS_VOTABLE: Article 2 has 0 votes after user tries 2 upvotes' do
+    @request.env['HTTP_REFERER'] = 'http://test.host/articles'
+    put :upvote, id: articles(:two)
+    put :upvote, id: articles(:two)
+    assert_redirected_to articles_path
+    assert_equal 0, articles(:one).get_downvotes.size
+  end
 end

@@ -10,6 +10,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'turbolinks'
 gem 'uglifier', '>= 1.3.0'
 gem 'devise', '~> 3.4.1'
+gem 'acts_as_votable', '~> 0.10.0'
 
 group :development, :test do
   gem 'byebug'
